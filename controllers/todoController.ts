@@ -35,7 +35,7 @@ export const createTodo = async (req: Request, res: Response) => {
 
     try {
         const result = await pool.query(
-            'INSERT INTO todos (title, completed, userID) VALUES ($1, $2, $3) RETURNING *',
+            'INSERT INTO todos (title, completed, user_id) VALUES ($1, $2, $3) RETURNING *',
             [title, false, userId]
         );
         res.status(201).json(result.rows[0]);
