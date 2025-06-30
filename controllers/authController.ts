@@ -16,8 +16,9 @@ export const register = async (req: Request, res: Response) => {
 
         const isExistigUser = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
 
-        if(!isExistigUser.rowCount || isExistigUser?.rowCount > 0 ) { 
+        if(isExistigUser.rowCount && isExistigUser?.rowCount > 0 ) { 
             res.status(409).json({ message: 'User already exists with this email' });
+            return;
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
